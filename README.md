@@ -20,7 +20,7 @@ Este proyecto tiene como objetivo crear un modelo de aplicación guía para el a
 
 - SonarLint
 - JPA Buddy
-- Database Navi
+- Database Navigator
 
 
 
