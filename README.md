@@ -15,3 +15,12 @@ Este proyecto tiene como objetivo crear un modelo de aplicación guía para el a
 ## Entorno de desarrollo
 
 - IntelliJIDEA
+
+### Plugins del entorno de desarrollo
+
+- SonarLint
+- JPA Buddy
+- Database Navigator
+
+
+
