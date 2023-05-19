@@ -39,6 +39,7 @@ Para aprovechar al máximo el desarrollo en este proyecto, se recomienda instala
 - **Docker**: Este plugin te permite gestionar y administrar contenedores Docker directamente desde el IDE, lo que facilita la integración de tus aplicaciones con Docker.
 - **JPA Buddy**: El plugin JPA Buddy mejora la experiencia de desarrollo al proporcionar características específicas para trabajar con JPA (Java Persistence API) en tu proyecto.
 - **Database Navigator**: Este plugin te permite explorar y administrar bases de datos directamente desde el IDE, lo que facilita la interacción con tu base de datos durante el desarrollo.
+- **SonarLint**: SonarLint te ayudará a detectar errores y defectos de programación en el código, consiguiendo siempre que calidad y seguridad lleguen a los estándares más altos.
 
 ### 3. Instalar Docker Desktop
 
