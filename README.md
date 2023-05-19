@@ -94,7 +94,7 @@ Sigue estos pasos para ejecutar el proyecto `EjemplospringbootApplication` en In
 1. Abre IntelliJ IDEA y selecciona "Open" en la pantalla de inicio.
 2. Navega hasta la carpeta del proyecto descargado y haz clic en "Open" para abrirlo en IntelliJ.
 3. Espera a que IntelliJ importe y configure el proyecto.
-4. Una vez que el proyecto se haya cargado correctamente, busca la clase `EjemplospringbootApplication`. Puedes encontrarla en la ruta `src/main/java/com/example/ejemplospringboot/EjemplospringbootApplication.java`.
+4. Una vez que el proyecto se haya cargado correctamente, busca la clase `EjemplospringbootApplication`. Puedes encontrarla en la ruta `src/main/java/com/eoi/ejemplospringboot/EjemplospringbootApplication.java`.
 5. Haz clic derecho en la clase `EjemplospringbootApplication` y selecciona Run 'EjemplospringbootApplication'" para ejecutar la aplicación.
 6. IntelliJ compilará y construirá el proyecto, y la aplicación se iniciará.
 
@@ -124,9 +124,11 @@ Al ejecutar este comando, Maven generará la imagen Docker del proyecto, incluye
 
 Una vez que la imagen Docker esté generada, puedes lanzar un contenedor utilizando la variable de entorno del perfil "local". Para hacerlo, debes ejecutar la siguiente sentencia:
 
-`docker run -e SPRING_PROFILE=local -p 8080:8080 <nombre-de-la-imagen>`
+   ```shell
+   docker run --name SpringbootLOCAL -e SPRING_PROFILE=local -p 8080:8080 alejandroteixeira/spring-boot:latest
+   ```
 
-
+Esto levantará un contenedor docker que podrás consultar, igual que antes, en http://localhost:8080
 
 
 ### Variables de entorno
@@ -208,6 +210,7 @@ Para levantar un contenedor MySQL utilizando el plugin de Docker en IntelliJ en 
 7. Una vez descargada la imagen, haz click derecho sobre ella y selecciona la opción "Create Container".
 
 8. En la sección "Port bindings", haz clic en el botón "+" para agregar una nueva asignación de puertos. Especifica el puerto 3036 en el campo "Host port" y el puerto 3306 en el campo "Container port".
+
 9. En la sección "Environment variables", haz clic en el botón "+" para agregar una nueva variable de entorno. Ingresa `MYSQL_ROOT_PASSWORD` como nombre y `password` como valor.
 
 10. Haz clic en el botón "OK" para crear el contenedor.
@@ -287,8 +290,20 @@ Puedes seguir estos pasos para crear una red personalizada y unir el contenedor 
 
 Recuerda que este es solo un ejemplo y puedes ajustar los valores y configuraciones según tus necesidades, como los nombres de la red, las imágenes de los contenedores y las variables de entorno.
 
+También puedes lanzar ambas directamente con los comandos:
+
+   ```shell
+   docker run -p 3306:3306 --env MYSQL_ROOT_PASSWORD=password --name mysql-server-dev --pull missing --network springboot mysql:latest
+   ```
+
+   ```shell
+   docker run -p 80:8080 --env DATABASE_HOST=mysql-server-dev --env SPRING_PROFILE=dev --name SpringbootAPP-DESARROLLO --pull missing --network springboot alejandroteixeira/spring-boot:latest
+   ```
+
 ¡Listo! Ahora puedes ejecutar la aplicación y la base de datos en diferentes contenedores de Docker en el mismo sistema utilizando una red personalizada.
 
+
+Al ser la versión de desarrollo y no la local, en este caso la hemos publicado en el puerto 80 para diferenciarlas, por lo que podrás acceder directamente desde  [http://localhost](http://localhost)
 
 
 

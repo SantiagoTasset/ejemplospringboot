@@ -16,6 +16,29 @@
 	<properties>
 		<java.version>20</java.version>
 	</properties>
+
+	<profiles>
+		<profile>
+			<!-- Perfil local -->
+			<id>local</id>
+			<!-- Otros elementos de configuración del perfil local -->
+		</profile>
+
+		<profile>
+			<!-- Perfil de desarrollo -->
+			<id>dev</id>
+			<!-- Otros elementos de configuración del perfil de desarrollo -->
+		</profile>
+
+		<profile>
+			<!-- Perfil de producción -->
+			<id>prod</id>
+			<!-- Otros elementos de configuración del perfil de producción -->
+		</profile>
+	</profiles>
+
+
+
 	<dependencies>
 
 		<dependency>
