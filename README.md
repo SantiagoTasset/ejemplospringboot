@@ -130,21 +130,45 @@ Una vez que la imagen Docker esté generada, puedes lanzar un contenedor utiliza
 
 Esto levantará un contenedor docker que podrás consultar, igual que antes, en http://localhost:8080
 
+## Perfiles de la Aplicación
 
-### Variables de entorno
+En el archivo `pom.xml`, se han configurado perfiles que permiten adaptar la ejecución de la aplicación según diferentes entornos o configuraciones específicas. A continuación se detallan los perfiles disponibles:
 
-Durante la ejecución del proyecto, se utilizan ciertas variables de entorno para adaptar la aplicación a diferentes escenarios. A continuación se enumeran las variables de entorno utilizadas en este proyecto:
+### Perfil `local`
 
-- `SPRING_PROFILE`: Esta variable define el perfil de ejecución de la aplicación.
-- `DATABASE_TYPE`: Esta variable especifica el tipo de base de datos que se utilizará.
-- `DATABASE_NAME`: Esta variable define el nombre de la base de datos.
-- `DATABASE_USERNAME`: Esta variable define el nombre de usuario para acceder a la base de datos.
-- `DATABASE_PASSWORD`: Esta variable define la contraseña para acceder a la base de datos.
-- `DATABASE_HOST`: Esta variable define la ubicación (host) del servidor de la base de datos.
-- `DATABASE_PORT`: Esta variable define el puerto del servidor de la base de datos.
-- `DATABASE_DRIVER`: Esta variable define el controlador de la base de datos a utilizar.
+Este perfil está diseñado para ejecutar la aplicación en un entorno local. No requiere una base de datos externa, ya que utiliza una base de datos H2 en memoria. Es útil durante el desarrollo y las pruebas locales.
 
-Asegúrate de configurar correctamente estas variables de entorno según tus necesidades antes de ejecutar el proyecto.
+### Perfil `dev`
+
+Este perfil está destinado a entornos de desarrollo. Utiliza una base de datos MySQL y se configura con parámetros específicos para este entorno. Puede requerir la configuración de variables de entorno o archivos de propiedades adicionales.
+
+### Perfil `prod`
+
+Este perfil está dirigido a entornos de producción. También utiliza una base de datos MySQL, pero se configura con parámetros específicos para el entorno de producción. Puede requerir configuraciones adicionales y consideraciones de seguridad.
+
+Cada perfil tiene sus propias configuraciones y dependencias específicas que se definen dentro del archivo `pom.xml`. Asegúrate de ajustar estas configuraciones según tus necesidades y entorno de ejecución.
+
+Recuerda que puedes personalizar aún más los perfiles y agregar tus propios perfiles según tus requisitos específicos.
+
+¡Ahora puedes aprovechar los perfiles de la aplicación para adaptarla a diferentes entornos y configuraciones!
+
+
+
+## Variables de entorno
+
+Durante la ejecución del proyecto, se utilizan ciertas variables de entorno para adaptar la aplicación a diferentes escenarios, especialmente cuando se activan perfiles específicos. A continuación se enumeran las variables de entorno utilizadas en este proyecto, algunas de las cuales pueden ser necesarias según el perfil activo:
+
+- `SPRING_PROFILE`: Esta variable define el perfil de ejecución de la aplicación y puede ser necesaria para cargar la configuración correspondiente a un perfil específico.
+- `DATABASE_TYPE`: Esta variable especifica el tipo de base de datos que se utilizará y puede ser necesaria para configurar correctamente la conexión a la base de datos según el perfil.
+- `DATABASE_NAME`: Esta variable define el nombre de la base de datos y puede ser necesaria para establecer la base de datos adecuada según el perfil.
+- `DATABASE_USERNAME`: Esta variable define el nombre de usuario para acceder a la base de datos y puede ser necesaria para autenticarse en la base de datos según el perfil.
+- `DATABASE_PASSWORD`: Esta variable define la contraseña para acceder a la base de datos y puede ser necesaria para autenticarse en la base de datos según el perfil.
+- `DATABASE_HOST`: Esta variable define la ubicación (host) del servidor de la base de datos y puede ser necesaria para establecer la conexión con el servidor de la base de datos según el perfil.
+- `DATABASE_PORT`: Esta variable define el puerto del servidor de la base de datos y puede ser necesaria para establecer la conexión con el servidor de la base de datos según el perfil.
+- `DATABASE_DRIVER`: Esta variable define el controlador de la base de datos a utilizar y puede ser necesaria para cargar el controlador adecuado según el perfil.
+
+Asegúrate de configurar correctamente estas variables de entorno según tus necesidades y el perfil activo antes de ejecutar el proyecto.
+
 
 
 ## Crear un modo de ejecución en IntelliJ con variables de entorno
