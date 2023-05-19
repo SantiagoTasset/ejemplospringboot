@@ -89,10 +89,17 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>io.fabric8</groupId>
+			<artifactId>docker-maven-plugin</artifactId>
+			<version>0.37.0</version>
+		</dependency>
+
 
 	</dependencies>
 
 	<build>
+
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -114,7 +121,59 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.38.0</version>
+				<configuration>
+					<images>
+						<image>
+							<!-- Configuración de la imagen MySQL -->
+							<name>mysql:latest</name>
+							<run>
+								<network>
+									<mode>bridge</mode>
+								</network>
+								<ports>
+									<port>3306:3306</port>
+								</ports>
+								<env>
+									<MYSQL_ROOT_PASSWORD>password</MYSQL_ROOT_PASSWORD>
+								</env>
+							</run>
+						</image>
+						<image>
+							<!-- Configuración de la imagen de la aplicación -->
+							<name>alejandroteixeira/spring-boot:latest</name>
+							<run>
+								<network>
+									<mode>bridge</mode>
+								</network>
+								<ports>
+									<port>80:8080</port>
+								</ports>
+								<env>
+									<DATABASE_HOST>mysql-server-dev</DATABASE_HOST>
+									<SPRING_PROFILE>dev</SPRING_PROFILE>
+								</env>
+							</run>
+						</image>
+					</images>
+				</configuration>
+				<executions>
+					<execution>
+						<id>docker-start</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
+
 	</build>
 
 </project>
