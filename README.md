@@ -51,7 +51,15 @@ Asegúrate de seguir estos pasos para configurar tu entorno de desarrollo local 
 
 ## Hacer un Fork del Proyecto
 
-Para hacer un fork del repositorio en GitHub, sigue estos pasos:
+Puedes crear tu propio proyecto spring desde cero desde este link de spring initializer: 
+
+[Spring project](https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.0.7&packaging=jar&jvmVersion=20&groupId=com.eoi&artifactId=springboot&name=springboot&description=Proyecto%20Gu%C3%ADa%20de%20Springboot&packageName=com.eoi.springboot&dependencies=devtools,lombok,configuration-processor,web)
+
+Ese modelo contiene únicamente las dependencias básicas y viene únicamente con la aplicación inicial de SpringBoot.  Puedes utilizarlo como base para trabajar pero deberás seguir los mismos pasos que se siguieron en el proyecto de ejemplo de springboot.
+
+
+
+Para hacer un fork del repositorio de ejemplo en GitHub y poder abrirlo en IntelliJ para comparar, sigue estos pasos:
 
 1. Navega hasta el repositorio original en GitHub: [ateixeiramunoz/ejemplospringboot](https://github.com/ateixeiramunoz/ejemplospringboot).
 2. Haz clic en el botón "Fork" en la parte superior derecha del repositorio.
