@@ -244,13 +244,13 @@ Puedes seguir estos pasos para crear una red personalizada y unir el contenedor 
 
 4. En la ventana emergente, ingresa un nombre para la red en el campo "Name" y haz clic en el botón "OK" para crear la red personalizada.
 
-5. Una vez creada la red, haz clic derecho en el contenedor MySQL que deseas unir a la red y selecciona la opción "Edit Container Settings".
+5. Una vez creada la red, haz clic derecho en el contenedor MySQL que creaste antes  y selecciona la opción "Edit Container Settings".
 
 6. En la configuración del contenedor, ve a la sección "Networks" y haz clic en el botón "+" para agregar una nueva red.
 
 7. Selecciona la red personalizada que creaste en el paso anterior y haz clic en el botón "OK" para unir el contenedor MySQL a esa red.
 
-8. Guarda los cambios en la configuración del contenedor.
+8. Guarda los cambios en la configuración del contenedor. Vuelve a crear el contenedor con la nueva configuración pulsando botón derecho sobre él. 
 
 9. Ahora, puedes crear un nuevo contenedor para ejecutar la aplicación y unirlo a la misma red personalizada.
 
@@ -301,7 +301,6 @@ También puedes lanzar ambas directamente con los comandos:
    ```
 
 ¡Listo! Ahora puedes ejecutar la aplicación y la base de datos en diferentes contenedores de Docker en el mismo sistema utilizando una red personalizada.
-
 
 Al ser la versión de desarrollo y no la local, en este caso la hemos publicado en el puerto 80 para diferenciarlas, por lo que podrás acceder directamente desde  [http://localhost](http://localhost)
 
