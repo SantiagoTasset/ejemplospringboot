@@ -77,7 +77,7 @@ Para mantener tu fork actualizado con la versión principal en GitHub, puedes se
 
 3. Agrega el repositorio original como un control remoto adicional utilizando el comando 
    ```shell
-   git remote add upstream https://github.com/ateixeiramunoz/ejemplospringboot`
+   git remote add upstream https://github.com/ateixeiramunoz/ejemplospringboot
    ```   
 Esto establecerá una conexión entre tu fork y el repositorio original.
 
