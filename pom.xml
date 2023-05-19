@@ -89,11 +89,16 @@
 			<scope>test</scope>
 		</dependency>
 
-
+		<dependency>
+			<groupId>io.fabric8</groupId>
+			<artifactId>docker-maven-plugin</artifactId>
+			<version>0.37.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
+			<!-- Plugin de Spring Boot Maven -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -105,8 +110,10 @@
 					</execution>
 				</executions>
 				<configuration>
+					<!-- Configuración del plugin Spring Boot Maven -->
 					<imageName>alejandroteixeira/spring-boot:latest</imageName>
 					<excludes>
+						<!-- Exclusión de la dependencia Lombok -->
 						<exclude>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
@@ -114,7 +121,102 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<!-- Excluir pruebas de integración utilizando un patrón -->
+					<excludes>
+						<exclude>**/*IntegrationTest.java</exclude>
+						<exclude>**/*IT.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<!-- Plugin Docker Maven -->
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.38.0</version>
+				<configuration>
+					<!-- Configuración del plugin Docker Maven -->
+					<dockerHost>unix:///home/alejandro/.docker/desktop/docker.sock</dockerHost>
+					<images>
+						<!-- Configuración de las imágenes Docker -->
+						<image>
+							<!-- Configuración de la imagen MySQL -->
+							<name>mysql:latest</name>
+							<run>
+								<network>
+									<mode>bridge</mode>
+								</network>
+								<ports>
+									<port>3306:3306</port>
+								</ports>
+								<env>
+									<MYSQL_ROOT_PASSWORD>password</MYSQL_ROOT_PASSWORD>
+								</env>
+							</run>
+						</image>
+						<image>
+							<!-- Configuración de la imagen de la aplicación -->
+							<name>alejandroteixeira/spring-boot:latest</name>
+							<run>
+								<network>
+									<mode>bridge</mode>
+								</network>
+								<ports>
+									<port>80:8080</port>
+								</ports>
+								<env>
+									<DATABASE_HOST>mysql-server-dev</DATABASE_HOST>
+									<SPRING_PROFILE>dev</SPRING_PROFILE>
+								</env>
+							</run>
+						</image>
+					</images>
+				</configuration>
+				<executions>
+					<!-- Ejecución del plugin Docker Maven para iniciar y detener los contenedores -->
+					<execution>
+						<id>docker-start</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>docker-stop</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>integration-tests</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+						<configuration>
+							<includes>
+								<include>**/*Test.java</include>
+							</includes>
+
+							<!-- Configuración adicional del plugin Failsafe -->
+							<systemPropertyVariables>
+								<stopContainersOnFail>true</stopContainersOnFail>
+							</systemPropertyVariables>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
-
 </project>

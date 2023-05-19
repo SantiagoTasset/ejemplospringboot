@@ -51,7 +51,15 @@ Asegúrate de seguir estos pasos para configurar tu entorno de desarrollo local 
 
 ## Hacer un Fork del Proyecto
 
-Para hacer un fork del repositorio en GitHub, sigue estos pasos:
+Puedes crear tu propio proyecto spring desde cero desde este link de spring initializer: 
+
+[Spring project](https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.0.7&packaging=jar&jvmVersion=20&groupId=com.eoi&artifactId=springboot&name=springboot&description=Proyecto%20Gu%C3%ADa%20de%20Springboot&packageName=com.eoi.springboot&dependencies=devtools,lombok,configuration-processor,web)
+
+Ese modelo contiene únicamente las dependencias básicas y viene únicamente con la aplicación inicial de SpringBoot.  Puedes utilizarlo como base para trabajar pero deberás seguir los mismos pasos que se siguieron en el proyecto de ejemplo de springboot.
+
+
+
+Para hacer un fork del repositorio de ejemplo en GitHub y poder abrirlo en IntelliJ para comparar, sigue estos pasos:
 
 1. Navega hasta el repositorio original en GitHub: [ateixeiramunoz/ejemplospringboot](https://github.com/ateixeiramunoz/ejemplospringboot).
 2. Haz clic en el botón "Fork" en la parte superior derecha del repositorio.
@@ -63,13 +71,37 @@ Una vez completado, tendrás un nuevo repositorio en tu cuenta de GitHub que es 
 
 Para mantener tu fork actualizado con la versión principal en GitHub, puedes seguir estos pasos:
 
-1. Clona tu fork en tu entorno local utilizando el comando `git clone` o una herramienta Git de tu elección.
-2. Agrega el repositorio original como un control remoto adicional utilizando el comando `git remote add upstream https://github.com/ateixeiramunoz/ejemplospringboot`. Esto establecerá una conexión entre tu fork y el repositorio original.
-3. Verifica los remotos configurados en tu repositorio local utilizando el comando `git remote -v`. Deberías ver tu fork (origin) y el repositorio original (upstream).
-4. Para actualizar tu fork, primero debes obtener los cambios del repositorio original ejecutando `git fetch upstream`. Esto traerá las últimas actualizaciones al repositorio local.
-5. Después de obtener los cambios, puedes combinarlos con tu rama principal utilizando `git merge upstream/main`. Asegúrate de estar en tu rama principal antes de ejecutar este comando.
-6. Si hay conflictos durante la fusión, resuélvelos manualmente editando los archivos afectados.
-7. Finalmente, empuja los cambios actualizados a tu fork en GitHub utilizando `git push origin <nombre-de-tu-rama>`.
+1. Clona tu fork en tu entorno local utilizando el comando 
+2. `git clone` o una herramienta Git de tu elección.
+
+3. Agrega el repositorio original como un control remoto adicional utilizando el comando 
+   ```shell
+   git remote add upstream https://github.com/ateixeiramunoz/ejemplospringboot`
+   ```   
+Esto establecerá una conexión entre tu fork y el repositorio original.
+
+
+4. Verifica los remotos configurados en tu repositorio local utilizando el comando
+   ```shell
+   git remote -v
+   ```
+5. Deberías ver tu fork (origin) y el repositorio original (upstream).
+6. Para actualizar tu fork, primero debes obtener los cambios del repositorio original ejecutando
+
+   ```shell
+   git fetch upstream
+   ```
+Esto traerá las últimas actualizaciones al repositorio local.
+   
+7. Después de obtener los cambios, puedes combinarlos con tu rama principal utilizando
+   ```shell
+   `git merge upstream/main`
+   ``` 
+   **¡¡¡Asegúrate de estar en tu rama principal antes de ejecutar este comando!!!!!**
+
+ 
+8. Si hay conflictos durante la fusión, resuélvelos manualmente editando los archivos afectados.
+9. Finalmente, empuja los cambios actualizados a tu fork en GitHub utilizando `git push origin <nombre-de-tu-rama>`.
 
 Con estos pasos, tu fork estará actualizado con los cambios más recientes del repositorio original en GitHub. Puedes repetir este proceso siempre que desees sincronizar tu fork con la versión principal.
 
@@ -85,6 +117,8 @@ Sin embargo, si se elige el perfil "dev", se seleccionará un sistema de conexi�
 La ejecución del proyecto se realiza mediante la configuración de ciertas variables de entorno, que permiten adaptar la aplicación a diferentes escenarios. Estas variables incluyen SPRING_PROFILE para definir el perfil de ejecución, DATABASE_TYPE para especificar el tipo de base de datos a utilizar, DATABASE_NAME para el nombre de la base de datos, DATABASE_USERNAME y DATABASE_PASSWORD para las credenciales de acceso, y DATABASE_HOST y DATABASE_PORT para la ubicación y el puerto del servidor de la base de datos. Además, DATABASE_DRIVER se utiliza para indicar el controlador de la base de datos.
 
 Con el Proyecto de Ejemplo Spring Boot EOI, podrás familiarizarte con los conceptos fundamentales de Spring Boot, incluyendo la configuración automática, la gestión de dependencias, el acceso a bases de datos mediante JPA, entre otros. A través de su estructura organizada y su configuración predefinida, este proyecto te servirá como punto de partida para tus propias aplicaciones basadas en Spring Boot.
+
+
 
 
 ## Ejecución del Proyecto en IntelliJ
@@ -105,6 +139,27 @@ Una vez que la aplicación se haya iniciado correctamente, puedes acceder a ella
 ¡Disfruta explorando y probando el proyecto en IntelliJ!
 
 
+## Ejecución de comandos desde este README.md
+
+Desde este archivo README, si lo abres desde IntelliJ, podrás ejecutar directamente los comandos maven o docker que vayas viendo en la explicación, asi como lanzar las clases de la aplicacion. 
+
+
+A continuación, se muestran algunos ejemplos de comandos Maven que puedes ejecutar utilizando este formato:
+
+Si indicas nombres de clases o metodos, detecta que es la clase de la aplicación y se prepara para ejecutarla.
+
+`EjemplospringbootApplication`  
+
+Los comandos maven también son funcionales.
+
+`mvn spring-boot:build-image`  
+
+Igual que los de Docker
+ ```shell
+ docker -v `  
+ ```
+
+   
 
 
 ## Integración con Docker
@@ -130,21 +185,45 @@ Una vez que la imagen Docker esté generada, puedes lanzar un contenedor utiliza
 
 Esto levantará un contenedor docker que podrás consultar, igual que antes, en http://localhost:8080
 
+## Perfiles de la Aplicación
 
-### Variables de entorno
+En el archivo `pom.xml`, se han configurado perfiles que permiten adaptar la ejecución de la aplicación según diferentes entornos o configuraciones específicas. A continuación se detallan los perfiles disponibles:
 
-Durante la ejecución del proyecto, se utilizan ciertas variables de entorno para adaptar la aplicación a diferentes escenarios. A continuación se enumeran las variables de entorno utilizadas en este proyecto:
+### Perfil `local`
 
-- `SPRING_PROFILE`: Esta variable define el perfil de ejecución de la aplicación.
-- `DATABASE_TYPE`: Esta variable especifica el tipo de base de datos que se utilizará.
-- `DATABASE_NAME`: Esta variable define el nombre de la base de datos.
-- `DATABASE_USERNAME`: Esta variable define el nombre de usuario para acceder a la base de datos.
-- `DATABASE_PASSWORD`: Esta variable define la contraseña para acceder a la base de datos.
-- `DATABASE_HOST`: Esta variable define la ubicación (host) del servidor de la base de datos.
-- `DATABASE_PORT`: Esta variable define el puerto del servidor de la base de datos.
-- `DATABASE_DRIVER`: Esta variable define el controlador de la base de datos a utilizar.
+Este perfil está diseñado para ejecutar la aplicación en un entorno local. No requiere una base de datos externa, ya que utiliza una base de datos H2 en memoria. Es útil durante el desarrollo y las pruebas locales.
 
-Asegúrate de configurar correctamente estas variables de entorno según tus necesidades antes de ejecutar el proyecto.
+### Perfil `dev`
+
+Este perfil está destinado a entornos de desarrollo. Utiliza una base de datos MySQL y se configura con parámetros específicos para este entorno. Puede requerir la configuración de variables de entorno o archivos de propiedades adicionales.
+
+### Perfil `prod`
+
+Este perfil está dirigido a entornos de producción. También utiliza una base de datos MySQL, pero se configura con parámetros específicos para el entorno de producción. Puede requerir configuraciones adicionales y consideraciones de seguridad.
+
+Cada perfil tiene sus propias configuraciones y dependencias específicas que se definen dentro del archivo `pom.xml`. Asegúrate de ajustar estas configuraciones según tus necesidades y entorno de ejecución.
+
+Recuerda que puedes personalizar aún más los perfiles y agregar tus propios perfiles según tus requisitos específicos.
+
+¡Ahora puedes aprovechar los perfiles de la aplicación para adaptarla a diferentes entornos y configuraciones!
+
+
+
+## Variables de entorno
+
+Durante la ejecución del proyecto, se utilizan ciertas variables de entorno para adaptar la aplicación a diferentes escenarios, especialmente cuando se activan perfiles específicos. A continuación se enumeran las variables de entorno utilizadas en este proyecto, algunas de las cuales pueden ser necesarias según el perfil activo:
+
+- `SPRING_PROFILE`: Esta variable define el perfil de ejecución de la aplicación y puede ser necesaria para cargar la configuración correspondiente a un perfil específico.
+- `DATABASE_TYPE`: Esta variable especifica el tipo de base de datos que se utilizará y puede ser necesaria para configurar correctamente la conexión a la base de datos según el perfil.
+- `DATABASE_NAME`: Esta variable define el nombre de la base de datos y puede ser necesaria para establecer la base de datos adecuada según el perfil.
+- `DATABASE_USERNAME`: Esta variable define el nombre de usuario para acceder a la base de datos y puede ser necesaria para autenticarse en la base de datos según el perfil.
+- `DATABASE_PASSWORD`: Esta variable define la contraseña para acceder a la base de datos y puede ser necesaria para autenticarse en la base de datos según el perfil.
+- `DATABASE_HOST`: Esta variable define la ubicación (host) del servidor de la base de datos y puede ser necesaria para establecer la conexión con el servidor de la base de datos según el perfil.
+- `DATABASE_PORT`: Esta variable define el puerto del servidor de la base de datos y puede ser necesaria para establecer la conexión con el servidor de la base de datos según el perfil.
+- `DATABASE_DRIVER`: Esta variable define el controlador de la base de datos a utilizar y puede ser necesaria para cargar el controlador adecuado según el perfil.
+
+Asegúrate de configurar correctamente estas variables de entorno según tus necesidades y el perfil activo antes de ejecutar el proyecto.
+
 
 
 ## Crear un modo de ejecución en IntelliJ con variables de entorno
@@ -304,7 +383,112 @@ También puedes lanzar ambas directamente con los comandos:
 
 Al ser la versión de desarrollo y no la local, en este caso la hemos publicado en el puerto 80 para diferenciarlas, por lo que podrás acceder directamente desde  [http://localhost](http://localhost)
 
+### Ciclo de Vida de Maven
 
+El ciclo de vida de Maven consta de una serie de fases que se ejecutan secuencialmente para construir y gestionar un proyecto. Cada fase realiza tareas específicas en el proceso de desarrollo y construcción del proyecto. A continuación se describen las principales fases del ciclo de vida de Maven:
+
+#### clean
+La fase `clean` se encarga de eliminar los archivos generados en compilaciones anteriores, como los directorios `target` y los archivos de compilación.
+
+Comando Maven: `mvn clean`
+
+#### validate
+La fase `validate` valida la estructura y la sintaxis del proyecto para asegurarse de que es válido y que todas las dependencias necesarias están disponibles.
+
+Comando Maven: `mvn validate`
+
+#### compile
+La fase `compile` compila los archivos fuente del proyecto y genera los archivos compilados, como los archivos `.class` para proyectos Java, en el directorio `target`.
+
+Comando Maven: `mvn compile`
+
+#### test
+En la fase `test`, Maven ejecuta las pruebas unitarias del proyecto. Busca los archivos de prueba ubicados en el directorio `src/test` y los ejecuta utilizando un marco de pruebas como JUnit.
+
+Comando Maven: `mvn test`
+
+#### package
+En la fase `package`, Maven empaca los archivos compilados y otros recursos necesarios en un formato específico, como un archivo JAR para proyectos Java.
+
+Comando Maven: `mvn package`
+
+#### verify
+La fase `verify` realiza verificaciones adicionales sobre el proyecto y los resultados de las pruebas.
+
+Comando Maven: `mvn verify`
+
+#### install
+En la fase `install`, Maven instala el artefacto en el repositorio local de Maven. Esto permite su reutilización en otros proyectos.
+
+Comando Maven: `mvn install`
+
+#### deploy
+La fase `deploy` copia el artefacto en un repositorio remoto, como un servidor de artefactos Maven, para su distribución o uso por otros desarrolladores.
+
+Comando Maven: `mvn deploy`
+
+Estas son las fases principales del ciclo de vida de Maven. Cada una de ellas cumple una función específica en el proceso de construcción y gestión del proyecto. Maven permite ejecutar estas fases de forma individual o como parte del ciclo completo para llevar a cabo diversas tareas en el desarrollo de software.
+
+La orden para lanzar el ciclo completo de Maven es simplemente ejecutar el comando:
+
+`mvn clean deploy` 
+
+Este comando ejecutará todas las fases del ciclo de vida de Maven, desde la fase clean hasta la fase deploy.
+
+La fase deploy es una de las fases finales del ciclo de vida de Maven y se utiliza para publicar los artefactos del proyecto en un repositorio remoto, como un repositorio Maven corporativo o un repositorio en la nube. Esto permite compartir y distribuir el artefacto generado con otros desarrolladores o sistemas.
+
+Es importante tener en cuenta que para ejecutar correctamente la fase deploy, es necesario configurar correctamente el repositorio remoto en el archivo settings.xml de Maven, proporcionando las credenciales de acceso y la URL del repositorio remoto.
+
+Al ejecutar el comando mvn clean deploy, Maven ejecutará todas las fases del ciclo de vida hasta llegar a la fase deploy, donde se realizará el despliegue del artefacto en el repositorio remoto configurado.
+
+Recuerda que para utilizar correctamente el comando mvn clean deploy, debes estar ubicado en el directorio raíz del proyecto donde se encuentra el archivo pom.xml.
+
+
+## Plugins Maven
+
+Los plugins se configuran en el archivo pom.xml y se ejecutan en fases específicas del ciclo de vida de Maven. Estos plugins nos brindan funcionalidades adicionales y nos permiten realizar diversas acciones durante el proceso de construcción, prueba y despliegue de la aplicación.
+
+Cada plugin cumple un rol específico en el ciclo de vida de la aplicación y nos ayuda a automatizar tareas importantes. Su configuración adecuada en el archivo pom.xml nos permite aprovechar al máximo estas funcionalidades y mejorar la eficiencia de nuestro proceso de desarrollo y despliegue.
+
+
+
+Algunos de los plugins comunes utilizados en el proyecto son:
+
+
+### Plugin Docker Maven
+
+El plugin `Docker Maven` se utiliza para interactuar con Docker desde Maven. Proporciona funcionalidades para construir, ejecutar y administrar contenedores Docker en el proceso de compilación y prueba de una aplicación.
+
+Con este plugin, puedes:
+
+- Construir y gestionar imágenes de Docker.
+- Configurar los contenedores y las redes necesarias.
+- Realizar acciones como iniciar y detener los contenedores durante diferentes fases del ciclo de vida de Maven.
+
+
+### Plugin Surefire Maven
+
+El plugin `Surefire Maven` se utiliza para ejecutar los tests unitarios en Maven. Proporciona un entorno de ejecución para las pruebas unitarias y garantiza que los resultados sean mostrados correctamente en los informes.
+
+Con este plugin, puedes:
+
+- Ejecutar los tests unitarios definidos en tu proyecto.
+- Configurar opciones de ejecución, como patrones de inclusión y exclusión de tests.
+- Ejecutar y generar informes sobre los tests unitarios, asegurando la calidad del código y detectando posibles errores.
+
+
+
+
+## Plugin Failsafe Maven
+
+El plugin `Failsafe Maven` es una extensión del plugin `Surefire Maven` que se utiliza para ejecutar los tests de integración en Maven. Proporciona un entorno separado para los tests de integración, permitiendo una mayor flexibilidad y configuración.
+
+Con este plugin, puedes:
+
+- Definir ejecuciones de tests de integración.
+- Ejecutar pruebas que involucran componentes más grandes de la aplicación y asegura la integración correcta de los diferentes módulos.
+- Especificar patrones de inclusión y exclusión de los tests.
+- Verificar los resultados de los tests de integración.
 
 
 
