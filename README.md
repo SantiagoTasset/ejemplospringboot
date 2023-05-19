@@ -87,6 +87,8 @@ La ejecución del proyecto se realiza mediante la configuración de ciertas vari
 Con el Proyecto de Ejemplo Spring Boot EOI, podrás familiarizarte con los conceptos fundamentales de Spring Boot, incluyendo la configuración automática, la gestión de dependencias, el acceso a bases de datos mediante JPA, entre otros. A través de su estructura organizada y su configuración predefinida, este proyecto te servirá como punto de partida para tus propias aplicaciones basadas en Spring Boot.
 
 
+
+
 ## Ejecución del Proyecto en IntelliJ
 
 Sigue estos pasos para ejecutar el proyecto `EjemplospringbootApplication` en IntelliJ:
@@ -105,6 +107,27 @@ Una vez que la aplicación se haya iniciado correctamente, puedes acceder a ella
 ¡Disfruta explorando y probando el proyecto en IntelliJ!
 
 
+## Ejecución de comandos desde este README.md
+
+Desde este archivo README, si lo abres desde IntelliJ, podrás ejecutar directamente los comandos maven o docker que vayas viendo en la explicación, asi como lanzar las clases de la aplicacion. 
+
+
+A continuación, se muestran algunos ejemplos de comandos Maven que puedes ejecutar utilizando este formato:
+
+Si indicas nombres de clases o metodos, detecta que es la clase de la aplicación y se prepara para ejecutarla.
+
+`EjemplospringbootApplication`  
+
+Los comandos maven también son funcionales.
+
+`mvn spring-boot:build-image`  
+
+Igual que los de Docker
+ ```shell
+ docker -v `  
+ ```
+
+   
 
 
 ## Integración con Docker
@@ -328,7 +351,112 @@ También puedes lanzar ambas directamente con los comandos:
 
 Al ser la versión de desarrollo y no la local, en este caso la hemos publicado en el puerto 80 para diferenciarlas, por lo que podrás acceder directamente desde  [http://localhost](http://localhost)
 
+### Ciclo de Vida de Maven
 
+El ciclo de vida de Maven consta de una serie de fases que se ejecutan secuencialmente para construir y gestionar un proyecto. Cada fase realiza tareas específicas en el proceso de desarrollo y construcción del proyecto. A continuación se describen las principales fases del ciclo de vida de Maven:
+
+#### clean
+La fase `clean` se encarga de eliminar los archivos generados en compilaciones anteriores, como los directorios `target` y los archivos de compilación.
+
+Comando Maven: `mvn clean`
+
+#### validate
+La fase `validate` valida la estructura y la sintaxis del proyecto para asegurarse de que es válido y que todas las dependencias necesarias están disponibles.
+
+Comando Maven: `mvn validate`
+
+#### compile
+La fase `compile` compila los archivos fuente del proyecto y genera los archivos compilados, como los archivos `.class` para proyectos Java, en el directorio `target`.
+
+Comando Maven: `mvn compile`
+
+#### test
+En la fase `test`, Maven ejecuta las pruebas unitarias del proyecto. Busca los archivos de prueba ubicados en el directorio `src/test` y los ejecuta utilizando un marco de pruebas como JUnit.
+
+Comando Maven: `mvn test`
+
+#### package
+En la fase `package`, Maven empaca los archivos compilados y otros recursos necesarios en un formato específico, como un archivo JAR para proyectos Java.
+
+Comando Maven: `mvn package`
+
+#### verify
+La fase `verify` realiza verificaciones adicionales sobre el proyecto y los resultados de las pruebas.
+
+Comando Maven: `mvn verify`
+
+#### install
+En la fase `install`, Maven instala el artefacto en el repositorio local de Maven. Esto permite su reutilización en otros proyectos.
+
+Comando Maven: `mvn install`
+
+#### deploy
+La fase `deploy` copia el artefacto en un repositorio remoto, como un servidor de artefactos Maven, para su distribución o uso por otros desarrolladores.
+
+Comando Maven: `mvn deploy`
+
+Estas son las fases principales del ciclo de vida de Maven. Cada una de ellas cumple una función específica en el proceso de construcción y gestión del proyecto. Maven permite ejecutar estas fases de forma individual o como parte del ciclo completo para llevar a cabo diversas tareas en el desarrollo de software.
+
+La orden para lanzar el ciclo completo de Maven es simplemente ejecutar el comando:
+
+`mvn clean deploy` 
+
+Este comando ejecutará todas las fases del ciclo de vida de Maven, desde la fase clean hasta la fase deploy.
+
+La fase deploy es una de las fases finales del ciclo de vida de Maven y se utiliza para publicar los artefactos del proyecto en un repositorio remoto, como un repositorio Maven corporativo o un repositorio en la nube. Esto permite compartir y distribuir el artefacto generado con otros desarrolladores o sistemas.
+
+Es importante tener en cuenta que para ejecutar correctamente la fase deploy, es necesario configurar correctamente el repositorio remoto en el archivo settings.xml de Maven, proporcionando las credenciales de acceso y la URL del repositorio remoto.
+
+Al ejecutar el comando mvn clean deploy, Maven ejecutará todas las fases del ciclo de vida hasta llegar a la fase deploy, donde se realizará el despliegue del artefacto en el repositorio remoto configurado.
+
+Recuerda que para utilizar correctamente el comando mvn clean deploy, debes estar ubicado en el directorio raíz del proyecto donde se encuentra el archivo pom.xml.
+
+
+## Plugins Maven
+
+Los plugins se configuran en el archivo pom.xml y se ejecutan en fases específicas del ciclo de vida de Maven. Estos plugins nos brindan funcionalidades adicionales y nos permiten realizar diversas acciones durante el proceso de construcción, prueba y despliegue de la aplicación.
+
+Cada plugin cumple un rol específico en el ciclo de vida de la aplicación y nos ayuda a automatizar tareas importantes. Su configuración adecuada en el archivo pom.xml nos permite aprovechar al máximo estas funcionalidades y mejorar la eficiencia de nuestro proceso de desarrollo y despliegue.
+
+
+
+Algunos de los plugins comunes utilizados en el proyecto son:
+
+
+### Plugin Docker Maven
+
+El plugin `Docker Maven` se utiliza para interactuar con Docker desde Maven. Proporciona funcionalidades para construir, ejecutar y administrar contenedores Docker en el proceso de compilación y prueba de una aplicación.
+
+Con este plugin, puedes:
+
+- Construir y gestionar imágenes de Docker.
+- Configurar los contenedores y las redes necesarias.
+- Realizar acciones como iniciar y detener los contenedores durante diferentes fases del ciclo de vida de Maven.
+
+
+### Plugin Surefire Maven
+
+El plugin `Surefire Maven` se utiliza para ejecutar los tests unitarios en Maven. Proporciona un entorno de ejecución para las pruebas unitarias y garantiza que los resultados sean mostrados correctamente en los informes.
+
+Con este plugin, puedes:
+
+- Ejecutar los tests unitarios definidos en tu proyecto.
+- Configurar opciones de ejecución, como patrones de inclusión y exclusión de tests.
+- Ejecutar y generar informes sobre los tests unitarios, asegurando la calidad del código y detectando posibles errores.
+
+
+
+
+## Plugin Failsafe Maven
+
+El plugin `Failsafe Maven` es una extensión del plugin `Surefire Maven` que se utiliza para ejecutar los tests de integración en Maven. Proporciona un entorno separado para los tests de integración, permitiendo una mayor flexibilidad y configuración.
+
+Con este plugin, puedes:
+
+- Definir ejecuciones de tests de integración.
+- Ejecutar pruebas que involucran componentes más grandes de la aplicación y asegura la integración correcta de los diferentes módulos.
+- Especificar patrones de inclusión y exclusión de los tests.
+- Verificar los resultados de los tests de integración.
 
 
 
