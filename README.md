@@ -63,13 +63,37 @@ Una vez completado, tendrás un nuevo repositorio en tu cuenta de GitHub que es 
 
 Para mantener tu fork actualizado con la versión principal en GitHub, puedes seguir estos pasos:
 
-1. Clona tu fork en tu entorno local utilizando el comando `git clone` o una herramienta Git de tu elección.
-2. Agrega el repositorio original como un control remoto adicional utilizando el comando `git remote add upstream https://github.com/ateixeiramunoz/ejemplospringboot`. Esto establecerá una conexión entre tu fork y el repositorio original.
-3. Verifica los remotos configurados en tu repositorio local utilizando el comando `git remote -v`. Deberías ver tu fork (origin) y el repositorio original (upstream).
-4. Para actualizar tu fork, primero debes obtener los cambios del repositorio original ejecutando `git fetch upstream`. Esto traerá las últimas actualizaciones al repositorio local.
-5. Después de obtener los cambios, puedes combinarlos con tu rama principal utilizando `git merge upstream/main`. Asegúrate de estar en tu rama principal antes de ejecutar este comando.
-6. Si hay conflictos durante la fusión, resuélvelos manualmente editando los archivos afectados.
-7. Finalmente, empuja los cambios actualizados a tu fork en GitHub utilizando `git push origin <nombre-de-tu-rama>`.
+1. Clona tu fork en tu entorno local utilizando el comando 
+2. `git clone` o una herramienta Git de tu elección.
+
+3. Agrega el repositorio original como un control remoto adicional utilizando el comando 
+```shell
+   git remote add upstream https://github.com/ateixeiramunoz/ejemplospringboot`
+```   
+Esto establecerá una conexión entre tu fork y el repositorio original.
+
+
+4. Verifica los remotos configurados en tu repositorio local utilizando el comando
+   ```shell
+   git remote -v
+   ```
+5. Deberías ver tu fork (origin) y el repositorio original (upstream).
+6. Para actualizar tu fork, primero debes obtener los cambios del repositorio original ejecutando
+
+   ```shell
+   git fetch upstream
+   ```
+Esto traerá las últimas actualizaciones al repositorio local.
+   
+7. Después de obtener los cambios, puedes combinarlos con tu rama principal utilizando
+   ```shell
+   `git merge upstream/main`
+   ``` 
+   **¡¡¡Asegúrate de estar en tu rama principal antes de ejecutar este comando!!!!!**
+
+ 
+8. Si hay conflictos durante la fusión, resuélvelos manualmente editando los archivos afectados.
+9. Finalmente, empuja los cambios actualizados a tu fork en GitHub utilizando `git push origin <nombre-de-tu-rama>`.
 
 Con estos pasos, tu fork estará actualizado con los cambios más recientes del repositorio original en GitHub. Puedes repetir este proceso siempre que desees sincronizar tu fork con la versión principal.
 
