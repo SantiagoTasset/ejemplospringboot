@@ -96,8 +96,8 @@ Esto traerá las últimas actualizaciones al repositorio local.
    
 7. Después de obtener los cambios, puedes combinarlos con tu rama principal utilizando
    ```shell
-   `git merge upstream/main`
-   ``` 
+   git merge upstream/main
+   ```
    **¡¡¡Asegúrate de estar en tu rama principal antes de ejecutar este comando!!!!!**
 
  
@@ -157,7 +157,7 @@ Los comandos maven también son funcionales.
 
 Igual que los de Docker
  ```shell
- docker -v `  
+ docker -v 
  ```
 
    
@@ -377,7 +377,7 @@ También puedes lanzar ambas directamente con los comandos:
    ```
 
    ```shell
-   docker run -p 80:8080 --env DATABASE_HOST=mysql-server-dev --env SPRING_PROFILE=dev --name SpringbootAPP-DESARROLLO --pull missing --network springboot alejandroteixeira/spring-boot:latest
+   docker run -p 0.0.0.0:80:8080 --env DATABASE_HOST=mysql-server-dev --env SPRING_PROFILE=dev --name SpringbootAPP-DESARROLLO --pull missing --network springboot alejandroteixeira/spring-boot:latest
    ```
 
 ¡Listo! Ahora puedes ejecutar la aplicación y la base de datos en diferentes contenedores de Docker en el mismo sistema utilizando una red personalizada.

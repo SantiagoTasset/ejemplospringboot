@@ -1,22 +1,39 @@
 package com.eoi.ejemplospringboot.controllers;
 
+
+import com.eoi.ejemplospringboot.entities.Usuario;
+import com.eoi.ejemplospringboot.repositories.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-/**
- * Controlador principal de la aplicación.
- */
+import java.util.List;
+
 @Controller
 public class MainController {
 
-    /**
-     * Maneja la solicitud GET para mostrar la página de inicio.
-     *
-     * @return el nombre de la plantilla HTML para mostrar la página de inicio
-     */
-    @GetMapping(value={"/",""})
-    public String showIndex(){
-        return "holamundo.html";
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
+    @GetMapping(value={"","/"})
+    public String mostrarIndex()
+    {
+        return "templates/index.html";
+    }
+
+    @GetMapping("/personal")
+    public String showPersonal(){
+        return "personal.html";
+    }
+
+    @GetMapping("/listausuarios")
+    public String showListaUsuarios(Model model){
+
+        List<Usuario> listaUsuarios = usuarioRepository.findAll();
+        model.addAttribute("listaUsuarios",listaUsuarios);
+
+        return "listaUsuarios.html";
     }
 
 }

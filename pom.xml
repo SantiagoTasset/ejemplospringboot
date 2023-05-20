@@ -14,7 +14,11 @@
 	<name>ejemplospringboot</name>
 	<description>Proyecto Guía de Springboot</description>
 	<properties>
-		<java.version>20</java.version>
+			<java.version>20</java.version>
+			<sonar.host.url>http://localhost:9000</sonar.host.url>
+			<sonar.language>java</sonar.language>
+			<sonar.scm.provider>git</sonar.scm.provider>
+			<sonar.login>squ_c44911bac48445dbd00c4dea39269f9a52d9ac24</sonar.login>
 	</properties>
 
 	<profiles>
@@ -34,6 +38,34 @@
 			<!-- Perfil de producción -->
 			<id>prod</id>
 			<!-- Otros elementos de configuración del perfil de producción -->
+		</profile>
+		<profile>
+			<id>coverage</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>prepare-agent</id>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>report</id>
+								<goals>
+									<goal>report</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 	</profiles>
 
@@ -94,6 +126,17 @@
 			<artifactId>docker-maven-plugin</artifactId>
 			<version>0.37.0</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+
+
+
+
+
 	</dependencies>
 
 	<build>
@@ -217,6 +260,17 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.9.1.2184</version>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.6</version>
+			</plugin>
 		</plugins>
+
 	</build>
 </project>

@@ -1,0 +1,1 @@
+insert into USUARIO (apellido, nombre) values ('LOPEZ','JUAN');
