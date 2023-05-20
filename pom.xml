@@ -15,7 +15,12 @@
 	<description>Proyecto Guía de Springboot</description>
 	<properties>
 		<java.version>20</java.version>
+	  <sonar.host.url>http://88.4.51.190:9000</sonar.host.url>
+	  <sonar.language>java</sonar.language>
+	  <sonar.scm.provider>git</sonar.scm.provider>
+
 	</properties>
+	
 
 	<profiles>
 		<profile>
@@ -98,6 +103,7 @@
 
 	<build>
 		<plugins>
+
 			<!-- Plugin de Spring Boot Maven -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
