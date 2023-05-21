@@ -6,8 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 
-    @Getter
+
+@Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
@@ -35,6 +37,6 @@ import lombok.Setter;
 
         @ManyToMany
         @JoinColumn(name = "empresa_id")
-        private Empresa empresa;
+        private List<Empresa> empresas;
 
     }

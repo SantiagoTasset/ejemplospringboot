@@ -27,7 +27,6 @@ public class Empleado {
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
 }

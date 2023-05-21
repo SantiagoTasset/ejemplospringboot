@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Todas las entidades</title>
+</head>
+<body>
+<h1>Todas las entidades</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <!-- Agrega aquí las columnas adicionales que deseas mostrar -->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="entity : ${entities}">
+        <td th:text="${entity.id}"></td>
+        <!-- Agrega aquí las celdas adicionales que deseas mostrar -->
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

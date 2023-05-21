@@ -26,13 +26,13 @@ public class Empresa {
     /**
      * Lista de clientes asociados a la Empresa.
      */
-    @ManyToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Cliente> clientes;
 
     /**
      * Lista de empleados asociados a la Empresa.
      */
-    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Empleado> empleados;
 
     // Otras propiedades específicas de Empresa
