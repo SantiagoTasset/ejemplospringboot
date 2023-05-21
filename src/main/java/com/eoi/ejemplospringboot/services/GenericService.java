@@ -1,15 +1,15 @@
 package com.eoi.ejemplospringboot.services;
 import java.util.List;
 
-public interface GenericService<T, ID, R > {
+public interface GenericService<T, I, R > {
 
-    T getById(ID id);
+    T getById(I i);
 
     T create(T entity);
 
-    T update(ID id, T entity);
+    T update(I i, T entity);
 
-    void delete(ID id);
+    void delete(I i);
 
     List<T> listAll();
 

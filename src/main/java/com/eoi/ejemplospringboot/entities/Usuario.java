@@ -8,14 +8,6 @@ import lombok.Setter;
 
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import javax.persistence.*;
-import java.util.List;
-
 /**
  * Clase que representa a un Usuario en el sistema.
  * Un Usuario puede estar asociado a uno o varios roles y, opcionalmente, a un Empleado.

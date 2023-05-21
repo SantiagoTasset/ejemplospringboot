@@ -12,6 +12,6 @@ public class MiEntidadNoEncontradaException extends EntityNotFoundException {
      */
     @Override
     public String getMessage() {
-        return "La entidad no ha sido localida";
+        return "La entidad no ha sido localizada";
     }
 }

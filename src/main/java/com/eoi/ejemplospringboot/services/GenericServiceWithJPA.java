@@ -1,8 +1,6 @@
 package com.eoi.ejemplospringboot.services;
 
 import com.eoi.ejemplospringboot.errorcontrol.exceptions.MiEntidadNoEncontradaException;
-import com.eoi.ejemplospringboot.errorcontrol.exceptions.ParametrosIncorrectosException;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,7 @@ import java.util.List;
 @Service
 @Getter
 @Setter
-public abstract class GenericServiceWithJPA<T, ID, R extends JpaRepository<T, ID>> implements GenericService<T, ID, R> {
+public abstract class GenericServiceWithJPA<T, I, R extends JpaRepository<T, I>> implements GenericService<T, I, R> {
 
     @Autowired
     R repository;
@@ -24,15 +22,14 @@ public abstract class GenericServiceWithJPA<T, ID, R extends JpaRepository<T, ID
         this.repository = repository;
     }
 
-
     /**
-     * @param id 
+     * @param i
      * @return
      */
     @Override
-    public T getById(ID id) {
+    public T getById(I i) {
         try {
-            return repository.findById(id)
+            return repository.findById(i)
                     .orElseThrow(MiEntidadNoEncontradaException::new);
         } catch (MiEntidadNoEncontradaException ex) {
             throw new MiEntidadNoEncontradaException();
@@ -49,20 +46,20 @@ public abstract class GenericServiceWithJPA<T, ID, R extends JpaRepository<T, ID
     }
 
     /**
-     * @param id 
+     * @param i
      * @param entity
      * @return
      */
     @Override
-    public T update(ID id, T entity) {
+    public T update(I i, T entity) {
         return null;
     }
 
     /**
-     * @param id 
+     * @param i
      */
     @Override
-    public void delete(ID id) {
+    public void delete(I i) {
 
     }
 
