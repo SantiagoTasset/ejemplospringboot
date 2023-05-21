@@ -32,8 +32,7 @@ class AppIntegrationTest {
 	 */
 	@Test
 	void contextLoads() {
-
-
+		assert(true);
 	}
 
 }

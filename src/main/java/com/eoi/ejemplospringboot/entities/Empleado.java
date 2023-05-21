@@ -11,15 +11,23 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Rol {
+public class Empleado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
+    private String nombre;
+
+    private String apellido;
+
+    private String cargo;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Usuario usuario;
 
     @ManyToOne
-    private Usuario usuario;
+    @JoinColumn(name = "empresa_id")
+    private Empresa empresa;
 
 }

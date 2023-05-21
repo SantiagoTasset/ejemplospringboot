@@ -8,18 +8,29 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Rol {
+@Table(name = "menu")
+public class Menu {
 
     @Id
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
+    @Column(nullable = false)
+    private String description;
 
     @ManyToOne
-    private Usuario usuario;
+    private Menu parent;
 
+    @Column(name = "AppOrder")
+    private Integer order;
+    private Integer active;
+    private String url;
+
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
 }

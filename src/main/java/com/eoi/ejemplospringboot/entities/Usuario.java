@@ -8,24 +8,55 @@ import lombok.Setter;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.List;
+
+/**
+ * Clase que representa a un Usuario en el sistema.
+ * Un Usuario puede estar asociado a uno o varios roles y, opcionalmente, a un Empleado.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "usuario")
 public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    /**
+     * Nombre de usuario del Usuario.
+     */
+    private String username;
+
+    /**
+     * Nombre del Usuario.
+     */
     private String nombre;
 
+    /**
+     * Apellido del Usuario.
+     */
     private String apellido;
 
-    @OneToMany(mappedBy="usuario")
+    /**
+     * Lista de roles asociados al Usuario.
+     */
+    @OneToMany
     private List<Rol> roles;
+
+    /**
+     * Empleado asociado al Usuario (opcional).
+     */
+    @OneToOne(optional = true)
+    private Empleado empleado;
 
 }
 

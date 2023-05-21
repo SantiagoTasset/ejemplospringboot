@@ -494,4 +494,49 @@ Con este plugin, puedes:
 
 
 
+# Uso de WebJars en mi proyecto
+
+En este proyecto, estamos utilizando WebJars para gestionar las dependencias de bibliotecas web, específicamente `webjars-locator` y `bootstrap`. A continuación, explicaré cómo funciona WebJars y por qué lo estamos utilizando.
+
+## ¿Qué es WebJars?
+
+WebJars es un enfoque para empaquetar bibliotecas web y recursos estáticos en archivos JAR (Java Archive) para su fácil consumo en aplicaciones basadas en Maven. Proporciona una forma conveniente de administrar y utilizar bibliotecas web en proyectos Java.
+
+## Ventajas de utilizar WebJars
+
+- **Gestión sencilla de dependencias**: Con WebJars y Maven, puedes agregar fácilmente dependencias de bibliotecas web en tu proyecto sin tener que descargar y configurar manualmente los archivos de bibliotecas.
+
+- **Control de versiones**: Al utilizar WebJars, puedes especificar fácilmente la versión de la biblioteca que deseas utilizar. Maven se encarga de descargar la versión específica y mantener un control estricto de las dependencias.
+
+- **Facilidad de uso**: Los recursos de las bibliotecas web empaquetadas en WebJars son accesibles a través de rutas predefinidas y coherentes, lo que facilita su uso en tu proyecto sin tener que preocuparte por la ubicación de los archivos.
+
+
+## Funcionamiento de WebJars
+
+Cuando agregas una dependencia de WebJars a tu proyecto Maven, como `webjars-locator` y `bootstrap`, Maven se encarga de descargar automáticamente los archivos JAR correspondientes y colocarlos en el directorio `target/webjars` de tu proyecto.
+
+## Código HTML de la aplicación para importar librerias y css desde webjars
+
+En el código HTML, hemos agregado enlaces a los archivos de JavaScript y CSS de Bootstrap utilizando las rutas proporcionadas por WebJars. Estas rutas comienzan con `/webjars/` seguido del nombre de la biblioteca y la ubicación del archivo dentro del archivo JAR.
+
+
+```markdown
+<!DOCTYPE html>
+<html lang="en">
+<title>WebJars Demo</title>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
+</head>
+<body>
+</body>
+</html>
+```
+
+
+
+
+
 

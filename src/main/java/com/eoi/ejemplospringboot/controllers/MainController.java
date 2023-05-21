@@ -13,27 +13,20 @@ import java.util.List;
 @Controller
 public class MainController {
 
-    @Autowired
-    UsuarioRepository usuarioRepository;
 
     @GetMapping(value={"","/"})
     public String mostrarIndex()
     {
-        return "templates/index.html";
+        return "index";
     }
 
-    @GetMapping("/personal")
-    public String showPersonal(){
-        return "personal.html";
+    @GetMapping("/holamundo")
+    public String holaMundo()
+    {
+        return "holamundo.html";
     }
 
-    @GetMapping("/listausuarios")
-    public String showListaUsuarios(Model model){
 
-        List<Usuario> listaUsuarios = usuarioRepository.findAll();
-        model.addAttribute("listaUsuarios",listaUsuarios);
 
-        return "listaUsuarios.html";
-    }
 
 }
