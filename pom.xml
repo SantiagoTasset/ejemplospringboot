@@ -20,6 +20,7 @@
 			<sonar.scm.provider>git</sonar.scm.provider>
 			<sonar.login>squ_c44911bac48445dbd00c4dea39269f9a52d9ac24</sonar.login>
 	</properties>
+	
 
 	<profiles>
 		<profile>
@@ -154,6 +155,7 @@
 
 	<build>
 		<plugins>
+
 			<!-- Plugin de Spring Boot Maven -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

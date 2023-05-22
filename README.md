@@ -9,6 +9,8 @@ Este proyecto de ejemplo utiliza Spring Boot 3.0.7, una versión estable y confi
 Para el desarrollo de esta aplicación, se recomienda el uso del entorno de desarrollo IntelliJ IDEA, conocido por su amplio conjunto de características y facilidades para el desarrollo de aplicaciones Java. También se sugiere la instalación de algunos plugins, como Docker para la gestión de contenedores, JPA Buddy para mejorar la experiencia de desarrollo con JPA y Database Navigator para explorar y administrar bases de datos directamente desde el IDE.
 
 
+
+
 ## Software utilizado
 
 En este proyecto, se utilizan las siguientes tecnologías:
