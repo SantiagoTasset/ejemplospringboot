@@ -30,7 +30,7 @@ import org.springframework.stereotype.Controller;
 public class UsuarioController<Usuario> extends MiControladorGenerico {
 
     @Value("${url.usuario}")
-    private String entityName;
+    private String urlBase;
 
     /**
      * Constructor de la clase UsuarioController.
@@ -51,7 +51,7 @@ public class UsuarioController<Usuario> extends MiControladorGenerico {
      */
     @PostConstruct
     private void init() {
-        super.entityName = entityName;
+        super.entityName = urlBase;
         super.entityPrefix = entityName + "/";
     }
 }
