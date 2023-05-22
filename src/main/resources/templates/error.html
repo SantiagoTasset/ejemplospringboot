@@ -12,9 +12,9 @@
         <p class="lead">Ha ocurrido un error en la aplicación.</p>
         <hr class="my-4">
         <h4>Detalles del error:</h4>
-        <p class="font-weight-bold" th:text="${error}"></p>
+        <h5 class="font-weight-bold" th:text="${error}"></h5>
         <p th:text="${mensaje}"></p>
-        <pre class="text-danger" th:text="${causa}"></pre>
+        <pre th:each="linea : ${causa}"  class="text-danger" th:text="${linea.toString()}"></pre>
     </div>
 </div>
 <!-- Cargamos el script de Bootstrap al final del archivo para mejorar la velocidad de carga -->
