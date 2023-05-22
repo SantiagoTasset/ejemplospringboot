@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Error</h1>
+        <p class="lead">Ha ocurrido un error en la aplicación.</p>
+        <hr class="my-4">
+        <h4>Detalles del error:</h4>
+        <p class="font-weight-bold" th:text="${error}"></p>
+        <p th:text="${mensaje}"></p>
+        <pre class="text-danger" th:text="${causa}"></pre>
+    </div>
+</div>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
