@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -37,6 +38,8 @@ public class Usuario {
      * Apellido del Usuario.
      */
     private String apellido;
+
+    private LocalDate FechaNacimiento;
 
     /**
      * Lista de roles asociados al Usuario.

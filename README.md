@@ -527,16 +527,150 @@ En el código HTML, hemos agregado enlaces a los archivos de JavaScript y CSS de
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
 </head>
 <body>
+    <div class="content"></div>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
 ```
 
 
+Cargar el script de Bootstrap al final del archivo HTML es una práctica recomendada conocida como "deferred loading" (carga diferida). Esta práctica se utiliza para mejorar el rendimiento y la velocidad de carga de la página.
+
+Cuando se carga el script de Bootstrap al final del archivo HTML, se permite que el contenido HTML y los estilos CSS se carguen y rendericen primero. Esto evita el bloqueo del proceso de renderizado mientras se descarga y ejecuta el script de Bootstrap.
+
+Al cargar los estilos CSS primero, el navegador puede aplicar los estilos a medida que el contenido se va mostrando en la pantalla, lo que mejora la apariencia visual y la experiencia del usuario. Luego, al cargar el script de Bootstrap al final, se asegura de que todos los elementos de la página ya estén disponibles y listos para interactuar con el JavaScript de Bootstrap.
+
+Esta práctica ayuda a evitar el "efecto de bloqueo de renderizado" y garantiza que la página se cargue y muestre rápidamente, proporcionando una mejor experiencia de usuario.
+
+Es importante tener en cuenta que esta recomendación es aplicable cuando no hay dependencias críticas de JavaScript que deban cargarse antes de que se renderice el contenido principal de la página. Si tienes dependencias específicas que requieren la carga del script de Bootstrap antes, deberás ajustar la ubicación del enlace al script en consecuencia.
 
 
+
+Principios de programación de Spring Boot y Java aplicados en la aplicación
+=======================================
+
+En esta aplicación, se han aplicado varios principios de programación de Spring Boot y Java para lograr una arquitectura sólida y un código limpio y mantenible. A continuación, se describen algunos de los principios clave que se han utilizado en la creación de las interfaces y clases abstractas mencionadas.
+
+### Inversión de Control (IoC)
+
+La Inversión de Control es un principio fundamental en Spring Boot que permite desacoplar las dependencias y mover la responsabilidad de la creación y gestión de objetos a un contenedor de IoC, como el contenedor de Spring. En la aplicación, se ha aplicado este principio al utilizar anotaciones como `@Autowired` para inyectar dependencias, como los repositorios, en las clases correspondientes. Esto permite que el contenedor de Spring se encargue de crear y gestionar las instancias de las dependencias necesarias.
+
+**Ejemplo:**
+
+```java
+@Autowired
+private UserRepository userRepository;
+```
+
+### Inyección de Dependencias (DI)
+
+La Inyección de Dependencias es un patrón que se utiliza para proporcionar dependencias a un objeto en lugar de que el objeto las cree o las busque por sí mismo. En la aplicación, se ha utilizado la inyección de dependencias en diferentes clases, como en `GenericServiceWithJPA`, `MiControladorGenerico` y `UsuarioController`. Al inyectar las dependencias, como los servicios y repositorios, a través de constructores o métodos anotados con `@Autowired`, se logra un bajo acoplamiento entre las clases y se facilita la prueba y el intercambio de implementaciones.
+
+
+**Inyección de Dependencias (DI)**
+
+```java
+@Autowired
+public MiControladorGenerico(GenericServiceWithJPA<T, ?> service) {
+    this.service = service;
+}
+```
+
+
+### Principio de Abstracción
+
+El Principio de Abstracción es una práctica común en la programación orientada a objetos que busca abstraer los detalles internos de una implementación y proporcionar una interfaz genérica y reutilizable. En la aplicación, se ha aplicado este principio en las interfaces `GenericService` y `GenericServiceWithJPA`, que definen métodos genéricos para realizar operaciones CRUD en entidades. Estas interfaces permiten que se reutilice el código en diferentes partes de la aplicación sin conocer los detalles específicos de la implementación.
+
+
+**Principio de Abstracción**
+
+```java
+public interface GenericService<T> {
+    T getById(Object id);
+    T create(T entity);
+    T update(Object id, T entity);
+    void delete(Object id);
+    List<T> listAll();
+    JpaRepository<T, ?> getRepository();
+}
+```
+
+### Separación de Responsabilidades
+
+La Separación de Responsabilidades es un principio importante para mantener un código limpio y mantenible. En la aplicación, se ha buscado separar las responsabilidades mediante la creación de clases abstractas, como `GenericServiceWithJPA` y `MiControladorGenerico`, que proporcionan una implementación base para funcionalidades comunes. Estas clases abstractas encapsulan la lógica de acceso a datos y operaciones CRUD, lo que permite a las clases concretas especializadas centrarse en aspectos específicos de la aplicación.
+
+### Herencia y Polimorfismo
+
+El uso de herencia y polimorfismo es un principio clave en la programación orientada a objetos. En la aplicación, se ha utilizado la herencia y el polimorfismo al crear clases abstractas como `GenericServiceWithJPA` y `MiControladorGenerico`. Estas clases abstractas definen métodos comunes y proporcionan una estructura   base para que las clases concretas hereden de ellas y extiendan su funcionalidad. Esto fomenta la reutilización del código y la consistencia en la implementación de las clases concretas.
+
+### Principios de Diseño SOLID
+
+Se han aplicado algunos principios del diseño SOLID en la creación de las interfaces y clases abstractas. Entre ellos:
+
+- **Principio de Responsabilidad Única (SRP)**: Cada clase tiene una única responsabilidad y un único motivo para cambiar. Las interfaces `GenericService` y `GenericServiceWithJPA` tienen la responsabilidad de definir operaciones CRUD genéricas, mientras que las clases concretas se encargan de la implementación específica.
+
+- **Principio de Abierto/Cerrado (OCP)**: Las interfaces y clases abstractas se diseñan para ser abiertas a la extensión y cerradas a la modificación. Pueden ser extendidas por clases concretas para agregar funcionalidades adicionales sin modificar el código existente.
+
+- **Principio de Sustitución de Liskov (LSP)**: Las clases concretas que implementan las interfaces se pueden sustituir por las interfaces base sin afectar el comportamiento de la aplicación. Esto permite el uso polimórfico de las clases y promueve la cohesión y flexibilidad.
+
+
+
+
+Tratamiento de Errores en la Aplicación
+=======================================
+
+En la aplicación, se ha implementado un manejo de errores personalizado para proporcionar una respuesta adecuada a las excepciones que pueden ocurrir durante la ejecución. Esto se logra mediante el uso de las clases `CustomExceptionHandler` y `ErrorController`.
+
+`CustomExceptionHandler` es una clase anotada con `@ControllerAdvice`, que permite manejar excepciones específicas y proporcionar una respuesta personalizada. A continuación, se describen los métodos de manejo de excepciones implementados:
+
+- `handleEntityNotFoundException`: Maneja la excepción `EntityNotFoundException` y agrega los atributos necesarios al modelo para mostrar un mensaje descriptivo del error.
+- `handleMiEntidadNoEncontradaException`: Maneja la excepción `MiEntidadNoEncontradaException` y agrega los atributos necesarios al modelo para mostrar un mensaje específico del error.
+- `handleParametrosIncorrectosException`: Maneja la excepción `ParametrosIncorrectosException` y agrega los atributos necesarios al modelo para mostrar un mensaje indicando que los parámetros son incorrectos.
+- `handleException`: Maneja excepciones no controladas y agrega los atributos necesarios al modelo para mostrar un mensaje genérico de error.
+
+Además, la clase contiene la clase interna `ErrorResponse`, que se utiliza para representar la respuesta de error. Esta clase tiene atributos para el mensaje de error, el mensaje descriptivo y la causa de la excepción.
+
+Por otro lado, la clase `ErrorController` implementa la interfaz `ErrorController` de Spring Boot y se encarga de manejar los errores generados durante la ejecución de la aplicación. El método `handleError` se utiliza para procesar las excepciones y mostrar una página de error personalizada.
+
+En el caso de que se produzca una excepción `TemplateInputException`, se agrega la lógica necesaria para manejarla, como la adición de atributos al modelo para mostrar un mensaje específico de error relacionado con la carga de la plantilla.
+
+En cualquier otra excepción no controlada, se proporciona una respuesta genérica con un mensaje descriptivo del error.
+
+Estas clases y su manejo de errores forman parte de la arquitectura de la aplicación Spring Boot, siguiendo los principios de Inversión de Control (IoC) y el Principio de Abstracción. Además, se utiliza la anotación `@ControllerAdvice` para centralizar el manejo de excepciones y lograr un código más limpio y mantenible.
+
+
+### La Limitación de CustomExceptionHandler para Manejar Excepciones de Thymeleaf
+
+
+La clase `CustomExceptionHandler` proporciona un mecanismo para manejar excepciones personalizadas en la aplicación y ofrecer una respuesta adecuada. Sin embargo, presenta una limitación en el manejo de excepciones específicas de Thymeleaf, como la `TemplateInputException`. A continuación, se explica por qué `CustomExceptionHandler` no puede manejar directamente estas excepciones:
+
+En el caso de las excepciones de Thymeleaf, como la `TemplateInputException`, estas se lanzan durante la etapa de procesamiento de plantillas y son capturadas internamente por el motor de Thymeleaf. Esto significa que no se propagan directamente a la capa de manejo de excepciones de Spring.
+
+Debido a esta limitación, `CustomExceptionHandler` no puede capturar y manejar directamente las excepciones específicas de Thymeleaf. En su lugar, se utiliza el `ErrorController` para abordar estas excepciones y proporcionar una respuesta personalizada.
+
+Al implementar el `ErrorController`, se tiene acceso directo a la excepción lanzada y se puede verificar si es una `ServletException` con una causa de `TemplateInputException`. En caso afirmativo, se puede agregar la lógica necesaria para manejar específicamente esta excepción, como agregar atributos al modelo para mostrar un mensaje descriptivo relacionado con la carga de la plantilla.
+
+En resumen, la necesidad de tener un `ErrorController` para manejar las excepciones de Thymeleaf radica en la forma en que estas excepciones son lanzadas y capturadas internamente por el motor de Thymeleaf. El `ErrorController` brinda la capacidad de interceptar estas excepciones y proporcionar una respuesta personalizada en caso de errores relacionados con Thymeleaf.
+
+Esta consideración forma parte de la arquitectura de la aplicación Spring Boot, siguiendo los principios de Inversión de Control (IoC) y el Principio de Abstracción. Al utilizar el `ErrorController` junto con `CustomExceptionHandler`, se logra un manejo completo y consistente de excepciones en la aplicación.
+
+
+### Manejo de Excepciones de Thymeleaf con ErrorController
+
+
+En la aplicación, se utiliza la clase `ErrorController` para manejar las excepciones relacionadas con Thymeleaf y mostrar una página de error personalizada. A continuación, se explica la necesidad de tener un `ErrorController` y cómo se implementa en la aplicación:
+
+La clase `ErrorController` implementa la interfaz `ErrorController` de Spring Boot, lo que le permite manejar los errores generados durante la ejecución de la aplicación. Esto es especialmente útil para capturar y manejar las excepciones relacionadas con Thymeleaf, como la `TemplateInputException`, que ocurre cuando hay un error en la carga de una plantilla.
+
+El método `handleError` se encarga de procesar estas excepciones y mostrar una página de error personalizada. A través del parámetro `request` de tipo `HttpServletRequest`, se obtiene la información relacionada con el error, como la excepción lanzada. Luego, se verifica si la excepción es una `ServletException` con una causa de `TemplateInputException`. En ese caso, se agrega la lógica necesaria para manejar la excepción de Thymeleaf, como la adición de atributos al modelo para mostrar un mensaje específico de error relacionado con la carga de la plantilla.
+
+Si la excepción no es una `TemplateInputException`, se proporciona una respuesta genérica con un mensaje descriptivo del error. Esto permite manejar otras excepciones no controladas de Thymeleaf de manera adecuada.
+
+La implementación del `ErrorController` en la aplicación garantiza que todas las excepciones relacionadas con Thymeleaf sean capturadas y manejadas de manera consistente. Además, al mostrar una página de error personalizada, se mejora la experiencia del usuario y se proporciona información útil sobre el error ocurrido.
+
+Esta funcionalidad forma parte de la arquitectura de la aplicación Spring Boot, siguiendo los principios de Inversión de Control (IoC) y el Principio de Abstracción. Además, se utiliza la interfaz `ErrorController` para centralizar el manejo de excepciones relacionadas con Thymeleaf y lograr un código más limpio y mantenible.
 
 

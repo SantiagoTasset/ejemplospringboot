@@ -45,7 +45,7 @@ public interface GenericService<T> {
      * @param entity La entidad actualizada.
      * @return La entidad actualizada.
      */
-    T update(Object id, T entity);
+    T update(T entity);
 
     /**
      * Elimina una entidad por su identificador.
@@ -68,3 +68,4 @@ public interface GenericService<T> {
      */
     JpaRepository<T, ?> getRepository();
 }
+

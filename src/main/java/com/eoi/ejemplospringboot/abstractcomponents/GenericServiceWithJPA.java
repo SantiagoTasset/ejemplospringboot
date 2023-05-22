@@ -22,11 +22,12 @@ import java.util.List;
  * </ul>
  *
  * @param <T> El tipo de entidad gestionado por el servicio.
+ * @param <ID> El tipo de dato utilizado como identificador de la entidad.
  */
-public abstract class GenericServiceWithJPA<T> implements GenericService<T> {
+public abstract class GenericServiceWithJPA<T, ID> implements GenericService<T> {
 
     @Autowired
-    protected JpaRepository<T, ?> repository;
+    protected JpaRepository<T, ID> repository;
 
     /**
      * Obtiene todas las entidades.
@@ -38,7 +39,6 @@ public abstract class GenericServiceWithJPA<T> implements GenericService<T> {
         return repository.findAll();
     }
 
-    // Resto de los métodos del servicio
 
     /**
      * Obtiene el repositorio asociado al servicio.
@@ -58,7 +58,7 @@ public abstract class GenericServiceWithJPA<T> implements GenericService<T> {
      */
     @Override
     public T getById(Object id) {
-        return null;
+        return repository.findById((ID) id).orElse(null);
     }
 
     /**
@@ -69,7 +69,7 @@ public abstract class GenericServiceWithJPA<T> implements GenericService<T> {
      */
     @Override
     public T create(T entity) {
-        return null;
+        return repository.saveAndFlush((T)entity);
     }
 
     /**
@@ -80,8 +80,8 @@ public abstract class GenericServiceWithJPA<T> implements GenericService<T> {
      * @return La entidad actualizada.
      */
     @Override
-    public T update(Object id, T entity) {
-        return null;
+    public T update(T entity) {
+        return repository.saveAndFlush((T)entity);
     }
 
     /**
