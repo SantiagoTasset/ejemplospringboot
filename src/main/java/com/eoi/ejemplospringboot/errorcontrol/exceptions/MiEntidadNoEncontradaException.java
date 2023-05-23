@@ -1,7 +1,5 @@
 package com.eoi.ejemplospringboot.errorcontrol.exceptions;
 
-import jakarta.persistence.EntityNotFoundException;
-
 public class MiEntidadNoEncontradaException extends RuntimeException {
 
     /**

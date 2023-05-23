@@ -1,22 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html >
 <head>
+    <!--/*  Each token will be replaced by their respective titles in the resulting page. */-->
     <meta charset="UTF-8">
-    <title>Error</title>
+    <title>Bienvenido</title>
     <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <link href="/webjars/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
 </head>
 <body>
-<div class="container">
+<div class="container" >
+    <!--/* Standard layout can be mixed with Layout Dialect */-->
     <div class="jumbotron">
-        <h1 class="display-4">Error</h1>
-        <p class="lead">Ha ocurrido un error en la aplicación.</p>
+        <h1 class="display-4">SpringBoot</h1>
+        <p class="lead">Esta es la página principal de la aplicación</p>
         <hr class="my-4">
-        <h4>Detalles del error:</h4>
-        <p class="font-weight-bold" th:text="${error}"></p>
-        <p th:text="${mensaje}"></p>
-        <pre class="text-danger" th:text="${causa}"></pre>
+        <div class="alert alert-success d-flex align-items-center" role="alert">
+            <i class="mx-auto bi-balloon-heart" style="font-size: 8em"></i>
+        </div>
+        <p class="alert alert-dark" th:if="${mensaje != null}"  th:text="${mensaje}"></p>
     </div>
 </div>
+<div th:replace="fragments/footer :: footer">&copy; 2014 The Static Templates</div>
+<!-- Cargamos el script de Bootstrap al final del archivo para mejorar la velocidad de carga -->
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
+

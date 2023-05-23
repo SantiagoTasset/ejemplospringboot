@@ -41,7 +41,7 @@ public class MainController {
     )
     {
 
-        if (usuarioService.getById(username).getPassword() == password ) {            return "index";
+        if (usuarioService.getById(username).getPassword() == password ) { return "index";
         }
         else {
             return "error";

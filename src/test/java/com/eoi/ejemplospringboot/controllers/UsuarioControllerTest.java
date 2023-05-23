@@ -1,19 +1,17 @@
 package com.eoi.ejemplospringboot.controllers;
 
+import com.eoi.ejemplospringboot.MyControllerTestInterface;
 import com.eoi.ejemplospringboot.abstractcomponents.GenericServiceWithJPA;
 import com.eoi.ejemplospringboot.entities.Usuario;
 import com.eoi.ejemplospringboot.errorcontrol.exceptions.MiEntidadNoEncontradaException;
-import org.assertj.core.util.Arrays;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -23,7 +21,7 @@ import java.util.List;
 
 @SpringBootTest(classes= UsuarioController.class)
 @AutoConfigureMockMvc
-public class UsuarioControllerTest {
+public class UsuarioControllerTest implements MyControllerTestInterface {
 
     @Autowired
     private MockMvc mockMvc;
@@ -59,17 +57,12 @@ public class UsuarioControllerTest {
     }
 
     @Test
-    public void testGetById_EntityNotFound() throws Exception {
-        Object usuarioId = 1;
-
-        Mockito.when(userService.getById(usuarioId))
-                .thenThrow(new MiEntidadNoEncontradaException());
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/usuarios/{id}", usuarioId))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                //.andExpect(MockMvcResultMatchers.model().attributeExists("mensaje", "error"))
-                .andExpect(MockMvcResultMatchers.view().name("error"));
+    public void testGetById_InvalidId() throws Exception {
+        Mockito.when(userService.getById(1)).thenThrow(new EntityNotFoundException("Usuario no encontrado"));
+        mockMvc.perform(MockMvcRequestBuilders.get("/usuario/1"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
+
 
     @Test
     public void testCreate() throws Exception {
@@ -77,7 +70,7 @@ public class UsuarioControllerTest {
 
         Mockito.when(userService.create(Mockito.any())).thenReturn(usuario);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/usuarios")
+        mockMvc.perform(MockMvcRequestBuilders.post("/usuarios/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
                 .andExpect(MockMvcResultMatchers.status().isOk())

@@ -7,14 +7,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.boot.context.properties.bind.Nested;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.thymeleaf.exceptions.TemplateInputException;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.webjars.NotFoundException;
 
 /**
  * Manejador de excepciones personalizado para la aplicación.
@@ -100,6 +98,26 @@ public class CustomExceptionHandler {
         return "error";
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleNotFoundError(Model model) {
+        // Personaliza la lógica y los atributos del modelo para la respuesta de error 404
+        model.addAttribute("error", "Página no encontrada");
+        model.addAttribute("mensaje", "La página que buscas no está disponible.");
+
+        return "error";
+    }
+
+    @ExceptionHandler(Throwable.class)
+    public String handleGlobalException(Throwable throwable) {
+        if (throwable instanceof NotFoundException) {
+            throw (NotFoundException) throwable; // Relanza la excepción NotFoundException para que sea manejada por CustomErrorController
+        } else {
+            // Maneja otras excepciones de manera genérica
+            throw new RuntimeException("Error desconocido");
+        }
+    }
+
+
     /**
      * Maneja excepciones no controladas.
      *
@@ -109,8 +127,7 @@ public class CustomExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public String handleException(Exception ex, Model model) {
-        model.addAttribute(errorErrorDescriptionFieldName, "Excepción no controlada");
-        model.addAttribute(errorMessageFieldName, ex.getLocalizedMessage());
+        model.addAttribute(errorErrorDescriptionFieldName, ex.getLocalizedMessage());
         model.addAttribute(errorCausaFieldName, ex.getCause());
         return "error";
     }
@@ -126,7 +143,6 @@ public class CustomExceptionHandler {
     public class ErrorResponse {
         // Atributos para el mensaje de error, código de estado, detalles, etc.
         private String error;
-        private String mensaje;
         private String causa;
 
     }
