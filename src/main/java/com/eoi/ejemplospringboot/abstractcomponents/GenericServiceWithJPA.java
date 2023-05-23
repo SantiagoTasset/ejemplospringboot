@@ -1,5 +1,6 @@
 package com.eoi.ejemplospringboot.abstractcomponents;
 
+import com.eoi.ejemplospringboot.errorcontrol.exceptions.MiEntidadNoEncontradaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -58,7 +59,7 @@ public abstract class GenericServiceWithJPA<T, ID> implements GenericService<T> 
      */
     @Override
     public T getById(Object id) {
-        return repository.findById((ID) id).orElse(null);
+        return repository.findById((ID) id).orElseThrow(MiEntidadNoEncontradaException::new);
     }
 
     /**
@@ -69,7 +70,7 @@ public abstract class GenericServiceWithJPA<T, ID> implements GenericService<T> 
      */
     @Override
     public T create(T entity) {
-        return repository.saveAndFlush((T)entity);
+        return repository.saveAndFlush((T) entity);
     }
 
     /**
@@ -81,7 +82,11 @@ public abstract class GenericServiceWithJPA<T, ID> implements GenericService<T> 
      */
     @Override
     public T update(T entity) {
-        return repository.saveAndFlush((T)entity);
+
+        return repository.saveAndFlush(
+                (T)entity
+        );
+
     }
 
     /**

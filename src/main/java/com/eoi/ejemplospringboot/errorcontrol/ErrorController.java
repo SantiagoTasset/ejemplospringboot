@@ -4,11 +4,15 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.exceptions.TemplateInputException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Controlador para manejar los errores en la aplicación.
@@ -32,7 +36,6 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
 
     @Autowired
     private TemplateEngine templateEngine;
-
     /**
      * Maneja los errores y muestra una página de error personalizada.
      *
@@ -42,29 +45,71 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
      */
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request, Model model) {
-        // Obtener la excepción relacionada con el error
-        Throwable throwable = (Throwable) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
 
-        // Verificar si es una ServletException con una causa de TemplateInputException
-        if (throwable instanceof ServletException && throwable.getCause() instanceof TemplateInputException) {
-            ServletException servletException = (ServletException) throwable;
-            TemplateInputException templateInputException = (TemplateInputException) servletException.getCause();
+        Integer statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
-            // Agregar la lógica de manejo de TemplateInputException según tus necesidades
-            model.addAttribute("error", "Error en la carga de la plantilla");
-            model.addAttribute("mensaje", templateInputException.getMessage());
-            model.addAttribute("causa", templateInputException);
+        if (HttpStatus.NOT_FOUND.value() == statusCode) {
+            // Maneja el error de URL no encontrada
+            model.addAttribute("error", "Url no encontrada");
+            model.addAttribute("mensaje", "La página que buscas no está disponible en esta aplicación");
+            return "/error";
 
-            return "error";
+
         }
-        else {
-            // Agregar la lógica de manejo de una excepción genérica según tus necesidades
-            model.addAttribute("error", "Error Thymeleaf");
-            model.addAttribute("mensaje", throwable.getLocalizedMessage());
-            model.addAttribute("causa", throwable);
-
-            return "error";
+        else if(HttpStatus.FORBIDDEN.value()== statusCode){
+            // Maneja el error de URL no encontrada
+            model.addAttribute("error", "Acceso restringido");
+            model.addAttribute("mensaje", "No tienes permitido el acceso a esta URL");
+            return "/error";
         }
+        {
+
+            Throwable throwable = (Throwable) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
+
+            // Verificar si es una ServletException con una causa de Tem
+
+            if (throwable instanceof ServletException && throwable.getCause() instanceof TemplateInputException) {
+                ServletException servletException = (ServletException) throwable;
+                TemplateInputException templateInputException = (TemplateInputException) servletException.getCause();
+
+                // Obtener la lista de mensajes de las causas encadenadas
+                List<String> causes = getCauseMessages(templateInputException);
+
+                model.addAttribute("error", "Error en la carga de la plantilla");
+                model.addAttribute("causas", causes);
+
+                return "/error";
+            }
+            else {
+                // Obtener la lista de mensajes de las causas encadenadas
+                List<String> causes = getCauseMessages(throwable);
+
+                // Maneja otros errores de manera genérica
+                model.addAttribute("error", "Error desconocido");
+                model.addAttribute("mensaje", "Se ha producido un error desconocido.");
+                return "/error"; // Vista para el manejo genérico de errores
+
+            }
+
+        }
+
     }
+
+
+    private List<String> getCauseMessages(Throwable throwable) {
+        List<String> causes = new ArrayList<>();
+
+        Throwable cause = throwable;
+        while (cause != null) {
+            if(!causes.contains(cause.getMessage()))
+            {
+                causes.add(cause.getMessage());
+            }
+            cause = cause.getCause();
+        }
+
+        return causes;
+    }
+
 }
 

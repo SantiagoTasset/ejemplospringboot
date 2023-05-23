@@ -1,21 +1,15 @@
 package com.eoi.ejemplospringboot.controllers;
 
+import com.eoi.ejemplospringboot.entities.Usuario;
+import com.eoi.ejemplospringboot.services.UsuarioService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -24,34 +18,70 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
  * Clase de prueba para el controlador principal (MainController).
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes= MainController.class)
+@SpringBootTest
 @AutoConfigureMockMvc
 class MainControllerTest {
 
     @Autowired
-    private MockMvc mockMvc; // Objeto MockMvc para realizar solicitudes HTTP simuladas
+    private MockMvc mockMvc;
 
-    /**
-     * Prueba del método holaMundo() del controlador para la ruta "/holamundo".
-     * Verifica que la respuesta sea exitosa (código de estado 200) y que la vista retornada sea "holamundo.html".
-     */
+    @MockBean
+    private UsuarioService usuarioService;
+
     @Test
     void testHolaMundo() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/holamundo")) // Realiza una solicitud GET a la ruta "/holamundo"
-                .andExpect(MockMvcResultMatchers.status().isOk()) // Verifica que el código de estado de la respuesta sea 200 (OK)
-                .andExpect(MockMvcResultMatchers.view().name("holamundo.html")); // Verifica que la vista retornada sea "holamundo.html"
+        mockMvc.perform(MockMvcRequestBuilders.get("/holamundo"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("holamundo.html"));
     }
 
-    /**
-     * Prueba del método mainPage() del controlador para la ruta "".
-     * Verifica que la respuesta sea exitosa (código de estado 200) y que la vista retornada sea "index".
-     */
     @Test
     void testMainPage() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("")) // Realiza una solicitud GET a la ruta ""
-                .andExpect(MockMvcResultMatchers.status().isOk()) // Verifica que el código de estado de la respuesta sea 200 (OK)
-                .andExpect(MockMvcResultMatchers.view().name("index")); // Verifica que la vista retornada sea "index"
+        mockMvc.perform(MockMvcRequestBuilders.get("/"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("index"));
     }
 
+    @Test
+    void testLogin() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/login"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("login"));
+    }
+
+    @Test
+    void testLogin_ValidCredentials() throws Exception {
+        String username = "example";
+        String password = "password";
+
+        Usuario usuario = new Usuario();
+        usuario.setPassword(password);
+
+        Mockito.when(usuarioService.getById(username)).thenReturn(usuario);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/login")
+                        .param("username", username)
+                        .param("password", password))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("index"));
+    }
+
+    @Test
+    void testLogin_InvalidCredentials() throws Exception {
+        String username = "example";
+        String password = "wrongpassword";
+
+        Usuario usuario = new Usuario();
+        usuario.setPassword("correctpassword");
+
+        Mockito.when(usuarioService.getById(username)).thenReturn(usuario);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/login")
+                        .param("username", username)
+                        .param("password", password))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("error"));
+    }
 }
+
 

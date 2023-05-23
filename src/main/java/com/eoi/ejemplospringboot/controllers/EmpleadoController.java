@@ -1,6 +1,7 @@
 package com.eoi.ejemplospringboot.controllers;
 
 import com.eoi.ejemplospringboot.abstractcomponents.MiControladorGenerico;
+import com.eoi.ejemplospringboot.entities.Empleado;
 import com.eoi.ejemplospringboot.entities.Usuario;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,19 +30,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @param <Usuario> El tipo de entidad gestionada por el controlador.
  */
 @Controller
-@RequestMapping("${url.usuario}")
-public class UsuarioController<T> extends MiControladorGenerico<Usuario> {
+@RequestMapping("${url.empleado}")
 
-    @Value("${url.usuario}")
+public class EmpleadoController<T> extends MiControladorGenerico<Empleado> {
+
+
+
+    @Value("${url.empleado}")
     private String urlBase;
-
-    private String entityName = "usuario";
 
     /**
      * Constructor de la clase UsuarioController.
      * Se utiliza para crear una instancia del controlador.
      */
-    public UsuarioController() {
+    public EmpleadoController() {
         super();
     }
 
