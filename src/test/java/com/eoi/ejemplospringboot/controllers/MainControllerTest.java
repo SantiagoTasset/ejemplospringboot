@@ -43,6 +43,13 @@ class MainControllerTest {
     }
 
     @Test
+    void testLogin() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/login"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("login"));
+    }
+
+    @Test
     void testLogin_ValidCredentials() throws Exception {
         String username = "example";
         String password = "password";
